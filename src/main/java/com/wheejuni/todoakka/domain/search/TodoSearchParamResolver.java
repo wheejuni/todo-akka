@@ -5,6 +5,7 @@ import com.wheejuni.todoakka.domain.repositories.TodoRepository;
 import com.wheejuni.todoakka.view.params.TodoSearchParameter;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 /**
  * @author Hwi Jun Jeong(KR19385) created on 2019-09-26
@@ -26,6 +27,8 @@ public class TodoSearchParamResolver implements SearchParamResolver<Todo, TodoSe
 
     @Override
     public List<Todo> multiMatches(TodoSearchParameter predicate) {
-        return null;
+        return todoRepository.getAll().stream()
+            .filter(todo -> todo.isMatchingPredicate(predicate))
+            .collect(Collectors.toList());
     }
 }

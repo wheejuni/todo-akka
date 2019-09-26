@@ -1,6 +1,5 @@
 package com.wheejuni.todoakka.domain;
 
-import com.wheejuni.todoakka.domain.search.SearchPredicate;
 import com.wheejuni.todoakka.domain.search.SearchableEntityBase;
 import com.wheejuni.todoakka.view.params.TodoSearchParameter;
 import java.time.LocalDateTime;
