@@ -21,6 +21,7 @@ public class TerminateSignalEmitter {
             stopSwitch = inputSwitch != 0;
         }
 
+        System.out.println("stop signal received!");
         ApplicationSignal.resolveApplicationSignal(actorSystem, ApplicationSignal.STOP);
     }
 

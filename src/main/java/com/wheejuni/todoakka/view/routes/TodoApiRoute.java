@@ -15,7 +15,8 @@ public class TodoApiRoute extends AllDirectives {
 
     public Route createRoute() {
         return concat(
-                path("hello", () -> get(() -> complete("hello akka")))
+                path("hello", () -> get(() -> complete("hello akka"))),
+                path("api", () -> get(() -> complete("hello this is api v1.")))
         );
     }
 }
