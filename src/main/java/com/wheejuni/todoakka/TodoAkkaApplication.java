@@ -23,15 +23,13 @@ public class TodoAkkaApplication {
 
         final Http http = Http.get(system);
         final ActorMaterializer actorMaterializer = ActorMaterializer.create(system);
-        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = TodoApiRoute
+
+        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = TodoApiRoute.getInstance()
                 .createRoute().flow(system, actorMaterializer);
 
         final CompletionStage<ServerBinding> binding =
                 http.bindAndHandle(routeFlow, ConnectHttp.toHost("localhost", 8080), actorMaterializer);
 
         binding.thenCompose(ServerBinding::unbind).thenAccept(unbound -> system.terminate());
-
-
-        
     }
 }
