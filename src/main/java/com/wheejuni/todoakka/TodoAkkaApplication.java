@@ -21,11 +21,12 @@ public class TodoAkkaApplication {
         System.out.println(WelcomeMessage.welcomeBanner());
 
         ActorSystem system = ActorSystem.create("routes");
+        TodoApiRoute apiRoute = new TodoApiRoute();
 
         final Http http = Http.get(system);
         final ActorMaterializer actorMaterializer = ActorMaterializer.create(system);
 
-        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = TodoApiRoute.getInstance()
+        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = apiRoute
                 .createRoute().flow(system, actorMaterializer);
 
 
