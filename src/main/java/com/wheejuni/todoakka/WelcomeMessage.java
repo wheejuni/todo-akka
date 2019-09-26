@@ -10,6 +10,8 @@ public class WelcomeMessage {
                 "   #    #     # #     # #     #    ####### #  #   #  #   ####### \n" +
                 "   #    #     # #     # #     #    #     # #   #  #   #  #     # \n" +
                 "   #    ####### ######  #######    #     # #    # #    # #     # \n" +
-                "                                                                 ";
+                "                                                                 \n"
+            + "HELLO AKKA Project running on localhost:8080\n"
+            + "Terminate application by pressing ENTER.";
     }
 }

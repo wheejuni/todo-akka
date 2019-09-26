@@ -12,6 +12,7 @@ import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 import com.wheejuni.todoakka.view.routes.TodoApiRoute;
 
+import java.io.IOException;
 import java.util.concurrent.CompletionStage;
 
 public class TodoAkkaApplication {
@@ -27,8 +28,17 @@ public class TodoAkkaApplication {
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = TodoApiRoute.getInstance()
                 .createRoute().flow(system, actorMaterializer);
 
+
+
         final CompletionStage<ServerBinding> binding =
                 http.bindAndHandle(routeFlow, ConnectHttp.toHost("localhost", 8080), actorMaterializer);
+
+        TerminateSignalEmitter emitter = new TerminateSignalEmitter(system);
+        try {
+            emitter.onApplicationRunning();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
 
         binding.thenCompose(ServerBinding::unbind).thenAccept(unbound -> system.terminate());
     }
