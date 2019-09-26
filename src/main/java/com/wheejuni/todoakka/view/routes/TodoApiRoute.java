@@ -8,6 +8,8 @@ import akka.http.scaladsl.model.StatusCode;
 import com.wheejuni.todoakka.application.TodoService;
 import com.wheejuni.todoakka.domain.Todo;
 import com.wheejuni.todoakka.domain.repositories.TodoRepository;
+import com.wheejuni.todoakka.view.params.TodoSearchParameter;
+import java.util.List;
 import java.util.concurrent.CompletionStage;
 
 public class TodoApiRoute extends AllDirectives {
@@ -27,6 +29,12 @@ public class TodoApiRoute extends AllDirectives {
                     path("save", () -> entity(Jackson.unmarshaller(Todo.class), todo -> {
                         CompletionStage<Done> futureSaved = todoService.asyncSaveTodo(todo);
                         return onSuccess(futureSaved, done -> complete(StatusCode.int2StatusCode(200), "todo saved"));
+                    }))),
+                post(() ->
+                    path("find", () -> entity(Jackson.unmarshaller(TodoSearchParameter.class), searchParam -> {
+                        CompletionStage<List<Todo>> futureResolved = todoService.getAsyncMultiTodo(searchParam);
+
+                        return onSuccess(futureResolved, resolvedItems -> completeOK(resolvedItems, Jackson.marshaller()));
                     })))
         );
     }

@@ -10,6 +10,8 @@ import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import com.wheejuni.todoakka.application.TodoService;
+import com.wheejuni.todoakka.domain.repositories.InmemoryTodoRepository;
 import com.wheejuni.todoakka.view.routes.TodoApiRoute;
 
 import java.io.IOException;
@@ -21,7 +23,9 @@ public class TodoAkkaApplication {
         System.out.println(WelcomeMessage.welcomeBanner());
 
         ActorSystem system = ActorSystem.create("routes");
-        TodoApiRoute apiRoute = new TodoApiRoute();
+
+        TodoService todoService = new TodoService(new InmemoryTodoRepository());
+        TodoApiRoute apiRoute = new TodoApiRoute(todoService);
 
         final Http http = Http.get(system);
         final ActorMaterializer actorMaterializer = ActorMaterializer.create(system);
