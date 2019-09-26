@@ -9,6 +9,7 @@ import java.util.List;
 public interface TodoRepository {
 
     Todo getTodo(TodoSearchParameter parameter);
+    void saveTodo(Todo todo);
     List<Todo> getTodos(TodoSearchParameter parameter);
     List<Todo> getTodosDueUntil(LocalDateTime due);
 }
