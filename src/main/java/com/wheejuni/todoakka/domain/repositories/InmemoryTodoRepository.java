@@ -3,10 +3,12 @@ package com.wheejuni.todoakka.domain.repositories;
 import com.wheejuni.todoakka.domain.Todo;
 import com.wheejuni.todoakka.view.params.TodoSearchParameter;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * @author Hwi Jun Jeong(KR19385) created on 2019-09-26
@@ -33,6 +35,11 @@ public class InmemoryTodoRepository implements TodoRepository {
     @Override
     public List<Todo> getTodosDueUntil(LocalDateTime due) {
         return null;
+    }
+
+    @Override
+    public List<Todo> getAll() {
+        return new ArrayList<>(todoStorage.values());
     }
 
     private UUID generateTodoId() {

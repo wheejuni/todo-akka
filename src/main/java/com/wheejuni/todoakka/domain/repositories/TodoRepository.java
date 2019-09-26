@@ -12,4 +12,5 @@ public interface TodoRepository {
     void saveTodo(Todo todo);
     List<Todo> getTodos(TodoSearchParameter parameter);
     List<Todo> getTodosDueUntil(LocalDateTime due);
+    List<Todo> getAll();
 }

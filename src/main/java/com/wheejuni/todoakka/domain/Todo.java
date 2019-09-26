@@ -1,8 +1,11 @@
 package com.wheejuni.todoakka.domain;
 
+import com.wheejuni.todoakka.domain.search.SearchPredicate;
+import com.wheejuni.todoakka.domain.search.SearchableEntityBase;
+import com.wheejuni.todoakka.view.params.TodoSearchParameter;
 import java.time.LocalDateTime;
 
-public class Todo {
+public class Todo implements SearchableEntityBase<TodoSearchParameter> {
 
     private String title;
     private String content;
@@ -36,5 +39,24 @@ public class Todo {
 
     public void setDue(LocalDateTime due) {
         this.due = due;
+    }
+
+    @Override
+    public boolean isMatchingPredicate(TodoSearchParameter predicate) {
+        boolean matching = false;
+
+        if(predicate.getTitle().equals(this.title)) {
+            matching = true;
+        }
+
+        if(this.content.contains(predicate.getContentIncluding())) {
+            matching = true;
+        }
+
+        if(this.due.isBefore(predicate.getSince())) {
+            matching = true;
+        }
+
+        return matching;
     }
 }
